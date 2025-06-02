@@ -1,5 +1,0 @@
-../CPP/src/main.cpp:24:6:void maincpp()	13
-../CPP/src/main.cpp:77:6:void HAL_GPIO_EXTI_Rising_Callback(uint16_t)	4
-../CPP/src/main.cpp:99:6:void HAL_GPIO_EXTI_Falling_Callback(uint16_t)	2
-../CPP/src/main.cpp:106:1:void __static_initialization_and_destruction_0()	1
-../CPP/src/main.cpp:106:1:cpp)	1
