@@ -1,7 +1,5 @@
-../CPP/SRC/main.cpp:22:6:)	1
-../CPP/SRC/main.cpp:56:6:void maincpp()	10
-../CPP/SRC/main.cpp:115:6:void HAL_GPIO_EXTI_Rising_Callback(uint16_t)	5
-../CPP/SRC/main.cpp:149:6:void HAL_GPIO_EXTI_Falling_Callback(uint16_t)	3
-../CPP/SRC/main.cpp:162:6:void HAL_UART_RxCpltCallback(UART_HandleTypeDef*)	2
-../CPP/SRC/main.cpp:169:1:void __static_initialization_and_destruction_0()	1
-../CPP/SRC/main.cpp:169:1:cpp)	1
+../CPP/SRC/main.cpp:26:6:)	1
+../CPP/SRC/main.cpp:59:6:void maincpp()	17
+../CPP/SRC/main.cpp:143:6:void HAL_GPIO_EXTI_Rising_Callback(uint16_t)	5
+../CPP/SRC/main.cpp:171:6:void HAL_GPIO_EXTI_Falling_Callback(uint16_t)	3
+../CPP/SRC/main.cpp:185:6:void HAL_UART_RxCpltCallback(UART_HandleTypeDef*)	5
