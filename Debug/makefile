@@ -59,34 +59,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := INTERRUPTS PT3
+BUILD_ARTIFACT_NAME := INTERRUPTS PT4
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-INTERRUPTS\ PT3.elf \
+INTERRUPTS\ PT4.elf \
 
 MAP_FILES += \
-INTERRUPTS\ PT3.map \
+INTERRUPTS\ PT4.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-INTERRUPTS\ PT3.list \
+INTERRUPTS\ PT4.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: INTERRUPTS\ PT3.elf secondary-outputs
+main-build: INTERRUPTS\ PT4.elf secondary-outputs
 
 # Tool invocations
-INTERRUPTS\ PT3.elf INTERRUPTS\ PT3.map: $(OBJS) $(USER_OBJS) C:\Users\Gesse\STM32CubeIDE\workspace_1.18.1\INTERRUPTS\ PT3\STM32G071RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "INTERRUPTS PT3.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\Gesse\STM32CubeIDE\workspace_1.18.1\INTERRUPTS PT3\STM32G071RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="INTERRUPTS PT3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+INTERRUPTS\ PT4.elf INTERRUPTS\ PT4.map: $(OBJS) $(USER_OBJS) C:\Users\Gesse\STM32CubeIDE\workspace_1.18.1\INTERRUPTS\ PT4\STM32G071RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "INTERRUPTS PT4.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\Gesse\STM32CubeIDE\workspace_1.18.1\INTERRUPTS PT4\STM32G071RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="INTERRUPTS PT4.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -95,14 +95,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-INTERRUPTS\ PT3.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "INTERRUPTS PT3.list"
+INTERRUPTS\ PT4.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "INTERRUPTS PT4.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) INTERRUPTS\ PT3.elf INTERRUPTS\ PT3.list INTERRUPTS\ PT3.map INTERRUPTS\\ PT3.elf default.size.stdout
+	-$(RM) INTERRUPTS\ PT4.elf INTERRUPTS\ PT4.list INTERRUPTS\ PT4.map INTERRUPTS\\ PT4.elf default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
