@@ -29,7 +29,12 @@ void debugPrint(const char *fmt, ...)
     HAL_UART_Transmit(&huart2, (uint8_t*)buf, len, HAL_MAX_DELAY);
 }
 
-volatile uint32_t button_pressed = 0;
+
+static const uint32_t SWEEP_INTERVAL_MS  = 1;
+static const uint32_t FREEZE_INTERVAL_MS = 500;
+static const uint32_t MANUAL_INTERVAL_MS = 200;
+
+volatile uint32_t button_pressed  = 0;
 volatile uint32_t button_releases = 0;
 volatile uint32_t time_since_button_pressed = HAL_GetTick();
 volatile uint32_t lastRiseTick = 0;
@@ -57,41 +62,54 @@ void maincpp(void)
 
 	time_since_button_pressed = HAL_GetTick();
 
+	 static uint32_t lastSweepTick  = 0;
+	    static uint32_t lastFreezeTick = 0;
+	    static uint32_t lastManualTick = 0;
+
 	while(1)
 	{
-		switch(currentMode)
-		{
-		case MODE_SWEEP:
-		// Sweep back and forth
-		SERVO_TIMER.Instance->CCR1 = pos;
-		pos += dir;
+		uint32_t now = HAL_GetTick();
 
-		if(pos >= SERVO_MAX)
-		{
-		pos = SERVO_MAX;
-		dir = -1;
-		}
-		else if ( pos <= SERVO_MIN)
-		{
-		pos = SERVO_MIN;
-		dir = +1;
+    switch (currentMode)
+    {
+        case MODE_SWEEP:
+        {
+            if (now - lastSweepTick >= SWEEP_INTERVAL_MS)
+            {
+                lastSweepTick = now;
+                SERVO_TIMER.Instance->CCR1 = pos;
+                pos += dir;
+                if (pos >= SERVO_MAX)
 
-		}
-		HAL_Delay(1);
-		break;
+                { pos = SERVO_MAX; dir = -1; } // I moved these set of braces together in a sentence because it was confusing keeping track of the open and closed braces
+                else if (pos <= SERVO_MIN)
+                { pos = SERVO_MIN; dir = +1; }
+            }
+            break;
+        }  // closes MODE_SWEEP
 
-		case MODE_FREEZE:
-			HAL_Delay(100);
-			break;
+        case MODE_FREEZE:
+        {
+            if (now - lastFreezeTick >= FREEZE_INTERVAL_MS)
+            {
+                lastFreezeTick = now;
+                HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+            }
+            break;
+        }  // closes MODE_FREEZE
 
-		case MODE_MANUAL:
-
-			pos = (pot_value * SERVO_RANGE) / ADC_MAX + SERVO_MIN;
-			                SERVO_TIMER.Instance->CCR1 = pos;
-			                debugPrint("MANUAL POS=%u, ADC=%lu\r\n", pos, pot_value);
-			                HAL_Delay(200);
-		break;
-	}
+        case MODE_MANUAL:
+        {
+            if (now - lastManualTick >= MANUAL_INTERVAL_MS)
+            {
+                lastManualTick = now;
+                pos = (pot_value * SERVO_RANGE) / ADC_MAX + SERVO_MIN;
+                SERVO_TIMER.Instance->CCR1 = pos;
+                debugPrint("MANUAL POS=%u, ADC=%lu\r\n", pos, pot_value);
+            }
+            break;
+        }  // closes MODE_MANUAL
+    }
 }
 }
 void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)

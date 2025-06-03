@@ -1,4 +1,4 @@
-"./CPP/src/main.o"
+"./CPP/SRC/main.o"
 "./Core/Src/adc.o"
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"
